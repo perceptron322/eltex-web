@@ -754,6 +754,7 @@ h4 {
 }
 
 .blogs-button {
+  position: relative;
   display: block;
   width: 180px;
   height: 50px;
@@ -764,6 +765,18 @@ h4 {
   margin-top: 60px;
   margin-inline: auto;
   padding: 0;
+  padding-right: 15px;
+}
+
+.blogs-button::after {
+  position: absolute;
+  content: '';
+  background: url('./icons/arrow_2.svg') center/contain no-repeat;
+  width: 27px;
+  height: 13px;
+  top: 50%;
+  transform: translateY(-55%);
+  margin-left: 2px;
 }
 
 .blogs-button:hover {
