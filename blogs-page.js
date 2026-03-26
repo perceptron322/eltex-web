@@ -28,12 +28,37 @@ cancelFormButtonElement.addEventListener('click', () => {
 // добавление в список
 const blogListElements = document.querySelector('[data-js-card-list]');
 const templateBlogElement = document.querySelector('[data-js-card-template]');
-const addBlogButtonElement = document.querySelector('[data-js-add-button]');
+const formNewBlog = document.querySelector('[data-js-form-new-blog]');
 
-addBlogButtonElement.addEventListener('click', () => {
-    const clone = templateBlogElement.content.cloneNode(true);
+formNewBlog.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-    blogListElements.appendChild(clone);
+    if (!formNewBlog.checkValidity()) {
+        formNewBlog.reportValidity();
+        return;
+    }
+
+    const formData = new FormData(formNewBlog);
+    const title = formData.get('blog-title');
+    const text = formData.get('blog-text');
+
+    const newBlog = templateBlogElement.content.cloneNode(true);
+    const blogTitle = newBlog.querySelector('[data-js-blog-title]');
+    blogTitle.textContent = title;
+
+    blogListElements.appendChild(newBlog);
+    
+    formNewBlog.reset();
+});
+
+
+// удаление статьи
+blogListElements.addEventListener('click', (event) => {
+    const deleteButton = event.target.closest('[data-js-delete-blog-button]');
+    if(!deleteButton) return;
+    
+    const blogItem = deleteButton.closest('.blogs-card-item');
+    blogItem.remove();
 });
 
 // статистика

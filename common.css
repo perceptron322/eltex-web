@@ -505,8 +505,30 @@ input {
 }
 
 .blogs-card-item {
-  
+  position: relative;
   min-width: 0;
+}
+
+.delete-blog-button {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  display: none;
+  border: none;
+  background-color: transparent;
+  color: var(--color-dark-blue);
+}
+
+.delete-blog-button:hover {
+  transform: scale(1.1);
+}
+
+.blogs-card-item:hover .delete-blog-button {
+  display: block;
+}
+
+.delete-blog-button svg {
+    pointer-events: none;
 }
 
 .blogs-card-item-image {
