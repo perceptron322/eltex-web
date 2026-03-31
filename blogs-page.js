@@ -3,26 +3,19 @@ const openFormButtonElement = document.querySelector('[data-js-add-blog-button]'
 const form = document.querySelector('.blog-new-form')
 
 openFormButtonElement.addEventListener('click', () => {
-    if (form.style.display === 'none' || !form.classList.contains('visible')) {
-        form.style.display = 'flex';
-        form.style.flexDirection = 'column';
+    form.classList.add('blog-new-form--visible');
+    requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                form.classList.add('visible');
-                form.scrollIntoView({behavior: 'smooth', block: 'start'});
-            });
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
-    }
+    });
 });
 
 // убираем форму по кнопке отмена
 const cancelFormButtonElement = document.querySelector('[data-js-form-cancel-button]');
 
 cancelFormButtonElement.addEventListener('click', () => {
-    form.classList.remove('visible');
-    form.addEventListener('transitionend', () => {
-        form.style.display = 'none';
-    }, {once: true});
+    form.classList.remove('blog-new-form--visible');
 });
 
 // добавление в список
@@ -44,7 +37,9 @@ formNewBlog.addEventListener('submit', (event) => {
 
     const newBlog = templateBlogElement.content.cloneNode(true);
     const blogTitle = newBlog.querySelector('[data-js-blog-title]');
+    const blogDescription = newBlog.querySelector('[data-js-blog-description]');
     blogTitle.textContent = title;
+    blogDescription.textContent = text;
 
     blogListElements.appendChild(newBlog);
     
