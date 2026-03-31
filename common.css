@@ -452,32 +452,24 @@ input {
 }
 
 .blogs-description:not(:last-child) {
-  margin-bottom: 110px;
+  margin-bottom: 50px;
 }
-
-/* .image-wrapper.blog-text-circle {
-  left: 86%;
-  bottom: 84%;
-} */
-
+/* 
 .blog-big-wrapper {
   display: flex;
 }
 
 .blog-big-image {
   width: 60%;
-  /* max-width: 769px; */
-  /* width: 100%;
   max-height: 453px;
-  height: 100%; */
+  height: 100%; 
 }
  
 .blog-big-inner {
   width: 40%;
   padding: 23px 29px 23px 46px;
   background-color: #FAFAFA;
-  /* max-width: 404px;
-  width: 100%; */
+  width: 100%;
 }
 
 .blog-big-title {
@@ -495,6 +487,9 @@ input {
 .blog-big-description:not(:last-child) {
   margin-bottom: 16px;
 }
+*/
+
+
 
 .blogs-card-list {
   display: grid;
@@ -536,13 +531,34 @@ input {
   aspect-ratio: 368 / 200;
 }
 
-.blogs-card-item-description {
+.blogs-card-item-title {
   font-size: 24px;
   line-height: 1;
+  margin-bottom: 20px;
 }
 
-.blogs-card-item-description:not(:last-child) {
-  margin-bottom: 21px;
+.blogs-card-item-description {
+  margin-bottom: 10px;
+}
+
+.blogs-card-item:not(:first-child) .blogs-card-item-description {
+  display: none;
+}
+
+.blogs-card-item:first-child {
+  display: flex;
+  flex-direction: row;
+  grid-column: span 3;
+  background-color: #FAFAFA;
+}
+
+.blogs-card-item:first-child .blogs-card-item-text {
+  padding: 16px 24px;
+}
+
+.blogs-card-item:first-child .blogs-card-item-title {
+  font-size: 32px;
+  margin-bottom: 16px;
 }
 
 .blogs-button {
@@ -582,7 +598,9 @@ input {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.blog-new-form.visible {
+.blog-new-form--visible {
+  display: flex;
+  flex-direction: column;
   opacity: 1;
   transform: translateY(0);
 }
@@ -789,22 +807,6 @@ input {
     text-align: center;
   }
 
-  .blog-big-inner {
-    padding: 12px 15px 12px 20px;
-  }
-
-  .blog-big-title {
-    font-size: 32px;
-  }
-
-  .blog-big-description {
-    font-size: 16px;
-  }
-
-  .blog-big-title:not(:last-child) {
-    margin-bottom: 8px;
-  }
-
   .blog-big-description:not(:last-child) {
     margin-bottom: 8px;
   }
@@ -812,6 +814,10 @@ input {
   .image-wrapper.blog-text-circle {
     width: 130px;
     bottom: 92%;
+  }
+
+  .blogs-description:not(:last-child) {
+    margin-bottom: 15px;
   }
 }
 
@@ -885,19 +891,18 @@ input {
   .blogs-card-item-description:not(:last-child) {
     margin-bottom: 10px;
   }
-}
 
-@media (max-width: 900px) {
-  .blog-big-title {
+  .blogs-card-item:first-child .blogs-card-item-image {
+    max-width: 300px;
+  }
+
+  .blogs-card-item:first-child .blogs-card-item-text {
+    padding: 8px 12px;
+  }
+
+  .blogs-card-item:first-child .blogs-card-item-title {
     font-size: 24px;
-  }
-
-  .blog-big-description {
-    font-size: 15px;
-  }
-
-  .blog-big-date {
-    font-size: 15px;
+    margin-bottom: 10px;
   }
 }
 
@@ -965,23 +970,19 @@ input {
   }
 
   .blogs-description:not(:last-child) {
-    margin-bottom: 50px;
-  }
-
-  .blog-big-image {
-    width: 40%;
-  }
-
-  .blog-big-inner {
-    width: 60%;
-  }
-
-  .blog-big-description {
-    display: none;
+    margin-bottom: 10px;
   }
 
   .blogs-card-list {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .blogs-card-item:first-child {
+    grid-column: span 2;
+  }  
+
+  .blogs-card-item:first-child .blogs-card-item-description {
+    display: none;
   }
 }
 
@@ -1018,19 +1019,31 @@ input {
     display: none;
   }
 
-  .blog-big-wrapper {
-    flex-direction: column;
-  }
-
-  .blog-big-image {
-    width: 100%;
-  }
-
-  .blog-big-inner {
-    width: 100%;
-  }
-
   .blogs-card-list {
     grid-template-columns: 1fr;
+  }
+
+  .blogs-card-item:first-child {
+    grid-column: 1;
+    flex-direction: column;
+    background-color: transparent;
+  }
+
+  .blogs-card-item:first-child .blogs-card-item-image {
+    max-width: 100%;
+  }
+
+  .blogs-card-item:first-child .blogs-card-item-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+  }
+
+  .blogs-card-item:first-child .blogs-card-item-description {
+    display: block;
+  }
+
+  .blogs-card-item:first-child .blogs-card-item-text {
+    padding: 0;
   }
 }
