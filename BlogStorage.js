@@ -2,9 +2,27 @@ export class BlogStorage {
     constructor() {
         this.blogList = document.querySelector('[data-js-card-list]')
         this.blogTemplate = document.querySelector('[data-js-card-template]');
+        this.blogButton = document.querySelector('[data-js-blog-button]');
+        this.loadingBlogAnimation = document.querySelector('[data-js-loading-blogs]');
+
+        this.loadingBlogAnimation.classList.add('show');
         this.posts = this.#getFromLocalStorage();
-        this.blogButton = document.querySelector('[data-js-blog-button]')
-        this.#renderBlogList();
+
+        async function makeResponseGetBlogs() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
+        }
+
+        makeResponseGetBlogs()
+            .then(() => {
+                console.log('Данные получены');
+            })
+            .finally(() => {
+                this.#renderBlogList();
+            });
     }
 
     #getFromLocalStorage() {
@@ -20,6 +38,8 @@ export class BlogStorage {
     // отрисовка статей из массива
     #renderBlogList() {
         this.blogList.innerHTML = '';
+
+        this.loadingBlogAnimation.classList.remove('show');
 
         if (this.posts.length === 0) {
             this.blogList.classList.add('blog-list--empty');

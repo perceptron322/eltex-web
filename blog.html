@@ -83,11 +83,22 @@
                     </li>
                 </template>
             </ul>
-            <button class="blogs-button" data-js-blog-button>
+            <button class="blogs-button is-hidden" data-js-blog-button>
                 Next
             </button>
+            <div class="loading-blogs-wrapper" data-js-loading-blogs>
+                <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 1V5" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M19.4246 18.9246L16.5961 16.0962" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M22.5 11.5L18.5 11.5" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M12 18V22" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M7.40381 6.90381L4.57538 4.07538" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M5.5 11.5L1.5 11.5" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M7.40381 16.0962L4.57538 18.9246" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+            </div>
         </section>
-        <form class="blog-new-form container" action="/submit" method="post" data-js-form-new-blog>
+        <form class="blog-new-form container" data-js-form-new-blog>
             <h1 class="blog-new-form-title">Добавить статью</h1>
 
             <label class="blog-new-form-input-title-label blog-new-form-label" for="blog-new-title">Заголовок</label>
@@ -98,6 +109,7 @@
                 type="text"
                 placeholder="Заголовок статьи"
                 required
+                data-js-title-input
             />
 
             <label class="blog-new-form-textarea-label blog-new-form-label" for="blog-new-textarea">Текст статьи</label>
@@ -108,11 +120,24 @@
                 placeholder="Текст статьи"
                 rows="5"
                 required
+                data-js-text-input
             ></textarea>
 
             <div class="blog-new-form-buttons-wrapper">
-                <button class="form-new-add-button form-new-button" type="submit" data-js-add-button>Добавить</button>
+                <button class="form-new-add-button form-new-button" type="button" data-js-add-button>Добавить</button>
                 <button class="form-new-cancel-button form-new-button" type="reset" data-js-form-cancel-button>Отмена</button>
+            </div>
+
+            <div class="loading-icon-wrapper" data-js-loading>
+                <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 1V5" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M19.4246 18.9246L16.5961 16.0962" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M22.5 11.5L18.5 11.5" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M12 18V22" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M7.40381 6.90381L4.57538 4.07538" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M5.5 11.5L1.5 11.5" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M7.40381 16.0962L4.57538 18.9246" stroke="#1C1C1C" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
             </div>
         </form>
         <aside class="admin-panel">
