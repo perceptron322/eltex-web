@@ -492,12 +492,27 @@ input {
 
 
 .blogs-card-list {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 36px;
   row-gap: 64px;
   padding-top: 65px;
 }
+
+.blogs-card-list.blog-list--empty {
+  margin-bottom: 100px;
+}
+
+.blogs-card-list.blog-list--empty::after {
+  content: 'Нет статей';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
 
 .blogs-card-item {
   position: relative;
@@ -550,15 +565,21 @@ input {
   flex-direction: row;
   grid-column: span 3;
   background-color: #FAFAFA;
+  width: 100%;
 }
 
 .blogs-card-item:first-child .blogs-card-item-text {
   padding: 16px 24px;
+  max-width: 350px;
 }
 
 .blogs-card-item:first-child .blogs-card-item-title {
   font-size: 32px;
   margin-bottom: 16px;
+}
+
+.blogs-card-item:first-child .blogs-card-item-image {
+  max-width: 800px;
 }
 
 .blogs-button {
@@ -589,6 +610,10 @@ input {
 
 .blogs-button:hover {
   background-color: var(--color-light-green);
+}
+
+.blogs-button.is-hidden {
+  display: none;
 }
 
 .blog-new-form {
