@@ -21,24 +21,77 @@ cancelFormButtonElement.addEventListener('click', () => {
     form.classList.remove('blog-new-form--visible');
 });
 
+// анимация загрузки
+const loadingIcon = document.querySelector('[data-js-loading]');
+
+function showLoader() {
+    loadingIcon.classList.add('show');
+}
+function hideLoader() {
+    loadingIcon.classList.remove('show');
+}
+
+// disable формы и кнопки
+const formTitleInput = document.querySelector('[data-js-title-input]');
+const formTextInput = document.querySelector('[data-js-text-input]');
+const formAddButton = document.querySelector('[data-js-add-button]');
+const formCancelButton = document.querySelector('[data-js-form-cancel-button]');
+
+function disableForm() {
+    formTitleInput.disabled = true;
+    formTextInput.disabled = true;
+
+    formAddButton.disabled = true;
+    formAddButton.classList.add('disabled');
+
+    formCancelButton.disabled = true;
+    formCancelButton.classList.add('disabled');
+}
+
+function unDisableForm() {
+    formTitleInput.disabled = false;
+    formTextInput.disabled = false;
+
+    formAddButton.disabled = false;
+    formAddButton.classList.remove('disabled');
+    
+    formCancelButton.disabled = false;
+    formCancelButton.classList.remove('disabled');
+}
+
 // добавление в список
 const formNewBlog = document.querySelector('[data-js-form-new-blog]');
 
-formNewBlog.addEventListener('submit', (event) => {
-    event.preventDefault();
-
+formAddButton.addEventListener('click', () => {
     if (!formNewBlog.checkValidity()) {
-        formNewBlog.reportValidity();
+        formNewBlog.reportValidity(); // покажет встроенные ошибки валидации
         return;
     }
 
     const formData = new FormData(formNewBlog);
-    const title = formData.get('blog-title');
-    const text = formData.get('blog-text');
 
-    blogStorage.addPost(title, text);
+    showLoader();
+    disableForm();
 
-    formNewBlog.reset();
+    function makeResponse() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(formData);
+            }, 1000);
+        });
+    }
+
+    makeResponse()
+        .then((formData) => {
+            const title = formData.get('blog-title');
+            const text = formData.get('blog-text');
+            blogStorage.addPost(title, text);
+        })
+        .finally(() => {
+            hideLoader();
+            formNewBlog.reset();
+            unDisableForm();
+        });
 });
 
 // статистика
