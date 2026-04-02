@@ -1,3 +1,6 @@
+import { BlogStorage } from "./BlogStorage.js";
+const blogStorage = new BlogStorage();
+
 // Раскрытие формы по кнопке с админ панели
 const openFormButtonElement = document.querySelector('[data-js-add-blog-button]');
 const form = document.querySelector('.blog-new-form')
@@ -19,8 +22,6 @@ cancelFormButtonElement.addEventListener('click', () => {
 });
 
 // добавление в список
-const blogListElements = document.querySelector('[data-js-card-list]');
-const templateBlogElement = document.querySelector('[data-js-card-template]');
 const formNewBlog = document.querySelector('[data-js-form-new-blog]');
 
 formNewBlog.addEventListener('submit', (event) => {
@@ -35,25 +36,9 @@ formNewBlog.addEventListener('submit', (event) => {
     const title = formData.get('blog-title');
     const text = formData.get('blog-text');
 
-    const newBlog = templateBlogElement.content.cloneNode(true);
-    const blogTitle = newBlog.querySelector('[data-js-blog-title]');
-    const blogDescription = newBlog.querySelector('[data-js-blog-description]');
-    blogTitle.textContent = title;
-    blogDescription.textContent = text;
+    blogStorage.addPost(title, text);
 
-    blogListElements.appendChild(newBlog);
-    
     formNewBlog.reset();
-});
-
-
-// удаление статьи
-blogListElements.addEventListener('click', (event) => {
-    const deleteButton = event.target.closest('[data-js-delete-blog-button]');
-    if(!deleteButton) return;
-    
-    const blogItem = deleteButton.closest('.blogs-card-item');
-    blogItem.remove();
 });
 
 // статистика
@@ -63,8 +48,7 @@ const closeStatWindowButtonElement = document.querySelector('[data-js-close-butt
 const blogsCountElement = document.querySelector('[data-js-blogs-count]');
 
 showStatWindowButtonElement.addEventListener('click', () => {
-    const count = blogListElements.querySelectorAll('.blogs-card-item').length;
-    blogsCountElement.textContent = count;
+    blogsCountElement.textContent = blogStorage.getPostsCount();
     statWindowElement.showModal();
 });
 
