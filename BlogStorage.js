@@ -50,7 +50,7 @@ export class BlogStorage {
         this.blogList.classList.remove('blog-list--empty');
         this.blogButton.classList.remove('is-hidden');
 
-        this.posts.forEach(post => {
+        const postElements = this.posts.map(post => {
             const card = this.blogTemplate.content.cloneNode(true);
 
             card.querySelector('[data-js-blog-title]').textContent = post.title;
@@ -59,15 +59,17 @@ export class BlogStorage {
             // сразу вешаем удаление статьи на иконку
             card.querySelector('[data-js-delete-blog-button]')
                 .addEventListener('click', () => this.deletePost(post.id));
-
-            this.blogList.append(card);
+            
+            return card;
         });
+
+        this.blogList.append(...postElements);
     }
 
     // при изменении массива статей, сохраняем в localStorage и рендерим снова
     addPost(title, text) {
         const post = {
-            id: Date.now(),
+            id: crypto.randomUUID(),
             title,
             text
         }

@@ -48,7 +48,7 @@ function disableForm() {
     formCancelButton.classList.add('disabled');
 }
 
-function unDisableForm() {
+function enableForm() {
     formTitleInput.disabled = false;
     formTextInput.disabled = false;
 
@@ -90,7 +90,7 @@ formAddButton.addEventListener('click', () => {
         .finally(() => {
             hideLoader();
             formNewBlog.reset();
-            unDisableForm();
+            enableForm();
         });
 });
 
