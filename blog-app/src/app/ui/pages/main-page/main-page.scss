@@ -1,0 +1,544 @@
+.about {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 20px;
+  height: calc(100vh - var(--header-height));
+  padding-top: 50px;
+
+  &-inner {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  &-title:not(:last-child) {
+    margin-bottom: 35px;
+  }
+
+  &-description {
+    max-width: 480px;
+    width: 100%;
+    font-size: 15px;
+    line-height: 1.73;
+  }
+
+  &-description:not(:last-child) {
+    margin-bottom: 14px;
+  }
+
+  &-more-button {
+    position: relative;
+    width: 130px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--color-green);
+
+    &:hover {
+      font-weight: var(--font-weight-accent);
+    }
+
+    &::after {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      content: '';
+      background: url('/icons/arrow-to-right.svg') center/contain no-repeat;
+      width: 14px;
+      height: 21px;
+    }
+  }
+}
+
+.about-more-button:hover::after {
+  right: -3%;
+}
+
+.image-wrapper {
+  position: absolute;
+  width: 215px;
+  aspect-ratio: 1;
+  opacity: 0.5;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition-duration: var(--transition-duration);
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.title {
+  line-height: 1;
+}
+
+.about-image-wrapper {
+  position: relative;
+  flex: 0 1 480px;
+}
+
+.about-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 546 / 655;
+  border-radius: 0 0 400px 400px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 50px;
+}
+
+.post-item {
+  display: flex;
+  max-height: 410px;
+  height: 100%;
+
+  &-inner {
+    flex: 0 0 40%;
+  }
+
+  &.item-1 {
+    .post-item-inner {
+      background-color: var(--color-light-orange);
+    }
+
+    .post-label {
+      color: var(--color-orange);
+    }
+  }
+
+  &.item-2 {
+    .post-item-inner {
+      background-color: var(--color-light-green);
+    }
+
+    .post-label {
+      color: var(--color-green);
+    }
+  } 
+
+  &-inner-wrapper {
+    padding: 63px 50px;
+  }
+
+  &-image {
+    flex: 0 0 60%;
+    min-width: 0;
+    max-height: 410px;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.post-label {
+  margin-bottom: 8px;
+}
+
+.post-title {
+  margin-bottom: 16px;
+}
+
+.post-description {
+  line-height: 1.62;
+}
+
+.posts-browse-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  color: var(--color-green);
+  font-size: 18px;
+  border: 1px solid var(--color-green);
+  border-radius: 5px;
+  transition-duration: var(--transition-duration);
+
+  &:hover {
+    background-color: var(--color-light-green);
+  }
+}
+
+.skills {
+  padding-top: 90px;
+
+  &-title:not(:last-child) {
+    margin-bottom: 50px;
+  }
+
+  &-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 36px;
+    row-gap: 60px;
+
+    &-item {
+      position: relative;
+      font-size: 24px;
+      max-width: 370px;
+      width: 100%;
+      height: auto;
+
+      &::after {
+        position: absolute;
+        left: 0;
+        bottom: -50%;
+        content: '';
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-light-gray);
+      }
+    }
+  }
+}
+
+.work {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  padding-top: 120px;
+
+  &-title:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  &-description {
+    max-width: 570px;
+    width: 100%;
+    height: auto;
+
+    p {
+      font-size: 21px;
+    }
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 76px;
+
+    &-item {
+      position: relative;
+      display: flex;
+      max-width: 590px;
+      width: 100%;
+      max-height: 180px;
+      height: 100%;
+      padding: 5px;
+
+      &::after {
+        position: absolute;
+        left: 0;
+        bottom: -25%;
+        content: '';
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-light-gray);
+      }
+
+      img {
+        margin-right: 24px;
+      }
+
+      &.item-1 img {
+        width: 66px;
+        height: 60px;
+      }
+
+      &.item-2 img {
+        width: 75px;
+        height: 75px;
+      }
+
+      &.item-3 img {
+        width: 69px;
+        height: 67px;
+      }
+
+      &-text-wrapper {
+        display: flex;
+        flex-direction: column;
+        row-gap: 14px;
+      }
+
+      &-job-title {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.hobby {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 70px 264px 264px;
+  grid-template-areas: 
+    "title title description description"
+    "vertical-1 vertical-2 horizontal-1 horizontal-1"
+    "vertical-1 vertical-2 horizontal-2 horizontal-2";
+  row-gap: 25px;
+  column-gap: 26px;
+  justify-content: center;
+  padding-top: 140px;
+
+  &-title {
+    grid-area: title;
+    line-height: 1;
+  }
+
+  &-description {
+    grid-area: description;
+
+    p {
+      font-size: 21px;
+      text-align: center;
+    }
+  }
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.hobby-vertical-image-1 {
+  width: 100%;
+  height: 100%;
+
+  &-wrapper {
+    grid-area: vertical-1;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      border-radius: 8px;
+      transition: background var(--transition-duration);
+    }
+
+    &:hover::after {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    &:hover .hobby-image-text-container {
+      opacity: 1;
+    }
+  }
+}
+
+.hobby-image {
+  &-text-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 16px;
+    z-index: 2;
+    color: #FFF;
+    opacity: 0;
+    transition: opacity var(--transition-duration);
+  }
+
+  &-title {
+    display: block;
+    width: 100%;
+    font-size: 24px;
+    bottom: 110px;
+  }
+
+  &-description {
+    bottom: 10px;
+    padding-inline: 5px;
+  }
+}
+
+.hobby-vertical-image-2 {
+  grid-area: vertical-2;
+  width: 100%;
+  height: 100%;
+}
+
+.hobby-horizontal-image-1 {
+  grid-area: horizontal-1;
+  width: 100%;
+  height: 264px;
+}
+
+.hobby-horizontal-image-2 {
+  grid-area: horizontal-2;
+  width: 100%;
+  height: 264px;
+}
+
+
+
+
+@media (max-width: 1500px) {
+  .about {
+    padding-top: 30px;
+  }
+
+  .post-item-inner-wrapper {
+    padding: 40px 30px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .hobby {
+    grid-template-columns: repeat(2, 267px);
+    grid-template-rows: repeat(2, 70px) repeat(4, 264px);
+    grid-template-areas: 
+      "title title"
+      "description description"
+      "vertical-1 vertical-2"
+      "vertical-1 vertical-2"
+      "horizontal-1 horizontal-1"
+      "horizontal-2 horizontal-2";
+  }
+
+  .hobby-title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .about {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .about-inner {
+    align-self: flex-start;
+  }
+
+  .about-image-wrapper {
+    height: 100%;
+    width: auto;
+    align-self: flex-end;
+  }
+
+  .about-image {
+    height: 100%;
+  }
+
+  .image-wrapper {
+    left: -50%;
+  }
+
+  .post-item-image {
+    display: none;
+  }
+
+  .post-item-inner {
+    width: 100%;
+    flex: none;
+  }
+
+  .skills-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .work-list {
+    row-gap: 50px;
+  }
+
+  .work-list-item::after {
+    bottom: -15%;
+  }
+}
+
+@media (max-width: 800px) {
+  .about {
+    padding-top: 50px;
+  }
+
+  .about-inner {
+    max-width: 100%;
+  }
+
+  .about-description {
+    max-width: 100%;
+  }
+
+  .image-wrapper {
+    left: -30%;
+  }
+
+  .posts {
+    padding-top: 50px;
+  }
+
+  .skills {
+    padding-top: 50px;
+  }
+
+  .skills-title {
+    text-align: center;
+  }
+
+  .skills-title:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .skills-list {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .skills-list-item {
+    width: 250px;
+    text-align: center;
+  }
+
+  .work {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+    max-height: none;
+    padding-top: 90px;
+  }
+
+  .hobby {
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-image-wrapper {
+    align-self: center;
+  }
+
+  .image-wrapper {
+    display: none;
+  }
+
+  .hobby {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hobby-vertical-image-1-wrapper {
+    width: 268px;
+    height: 552px;
+  }
+
+  .hobby-vertical-image-2 {
+    width: 268px;
+    height: 552px;
+    align-self: flex-end;
+  }
+
+  .hobby-horizontal-image-1 {
+    display: none;
+  }
+
+  .hobby-horizontal-image-2 {
+    display: none;
+  }
+}

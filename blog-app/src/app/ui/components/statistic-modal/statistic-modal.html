@@ -1,0 +1,18 @@
+<dialog class="stat-dialog" #dialog>
+    <h1 class="stat-title">Статистика страницы</h1>
+    <div class="stats-wrapper">
+        <div class="stats-item">
+            <div class="stats-title">Всего статей:</div>
+            <div class="stats-value blogs-count-value"> {{ postsCount }} </div>
+        </div>
+        <div class="stats-item">
+            <div class="stats-title">Комментарии:</div>
+            <div class="stats-value comments-count-value">0</div>
+        </div>
+    </div>
+    <button class="close-dialog-button" type="button" (click)="closeModal()">
+        <svg width="15" height="15" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.11 2.697L2.698 4.11 6.586 8l-3.89 3.89 1.415 1.413L8 9.414l3.89 3.89 1.413-1.415L9.414 8l3.89-3.89-1.415-1.413L8 6.586l-3.89-3.89z" fill="#68686A"></path>
+        </svg>
+    </button>
+</dialog>

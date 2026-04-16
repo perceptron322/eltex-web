@@ -2,12 +2,12 @@
   display: flex;
   justify-content: space-between;
   padding-top: var(--header-padding-top);
-}
 
-.header-logo-link {
-  cursor: default;
-  height: 36px;
-  font-size: 30px;
+  &-logo-link {
+    cursor: default;
+    height: 36px;
+    font-size: 30px;
+  }
 }
 
 .navigation-list {
@@ -24,26 +24,22 @@
   height: auto;
 }
 
-.navigation-item-link {
-  transition-duration: var(--transition-duration);
-}
-
-.navigation-item-link:hover {
+@mixin activeButton {
   color: var(--color-green);
   font-weight: var(--font-weight-accent);
+}
+
+.navigation-item-link {
+  transition-duration: var(--transition-duration);
+
+  &:hover, &.active {
+    @include activeButton();
+  }
 }
 
 
 
 @media (max-width: 800px) {
-  :root {
-    --header-padding-top: 15px;
-  }
-
-  .container {
-    padding-inline: 20px;
-  }
-
   .header-logo-link {
     font-size: 30px;
   }
