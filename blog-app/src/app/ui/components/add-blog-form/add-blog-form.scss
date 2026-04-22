@@ -27,6 +27,10 @@
     font-size: 18px;
     padding: 17px 20px;
     font-family: var(--font-family);
+
+    &.ng-invalid.ng-touched {
+      border-color: #FF0000;
+    }
   }
 
   &-textarea-label {
@@ -85,6 +89,7 @@ button[disabled] {
 }
 
 .input-error {
+  font-size: 12px;
   margin-left: 5px;
   margin-top: 5px;
   color: #FF0000;

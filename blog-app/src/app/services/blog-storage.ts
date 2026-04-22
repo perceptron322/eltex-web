@@ -1,33 +1,62 @@
 import { Injectable } from '@angular/core';
-import { PostElementWithId } from '../../models/post.models';
+import { PostElement, PostElementWithId } from '../../models/post.models';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
+
 export class BlogStorageService {
-    posts: PostElementWithId[] = this.#getFromLocalStorage();
+    private blogSubject$ = new BehaviorSubject<PostElementWithId[]>(
+        this.#loadFromLocalStorage()
+    );
+    readonly blogs$ = this.blogSubject$.asObservable();
+    readonly blogsCount$ = this.blogs$.pipe(
+        map(blogs => blogs.length)
+    );
 
-    addPost(post: PostElementWithId){
-        this.posts.push(post);
-        this.#saveToLocalStorage();
-    }
 
-    #getFromLocalStorage() {
-        const raw = localStorage.getItem('posts');
+    #loadFromLocalStorage() : PostElementWithId[] {
+        const raw = localStorage.getItem('blogs');
         if(!raw) return [];
-        return JSON.parse(raw);
+
+        try {
+            return JSON.parse(raw) as PostElementWithId[];
+        } catch(err) {
+            console.error('Невалидный JSON в localStorage, ', err);
+            localStorage.removeItem('blogs');
+            return [];
+        }
     }
 
-    #saveToLocalStorage() {
-        localStorage.setItem('posts', JSON.stringify(this.posts));
+    #saveToLocalStorage() : void {
+        try {
+            const posts = this.blogSubject$.value;
+            localStorage.setItem('blogs', JSON.stringify(posts));
+        } catch(err) {
+            console.error('Не удалось загрузить данные в localStorage, ', err);
+        }
     }
 
-    deletePost(post : PostElementWithId) {
-        this.posts = this.posts.filter(postElement => postElement.id !== post.id)
+    addPost(post: PostElement) : void {
+        const withId: PostElementWithId = { ...post, id: crypto.randomUUID() };
+        const updated = [...this.blogSubject$.value, withId];
+        this.blogSubject$.next(updated);
         this.#saveToLocalStorage();
     }
 
-    getPostsCount() {
-        return this.posts.length;
+    updatePost(post: PostElementWithId) : void {
+        const updated = this.blogSubject$.value.map(
+            p => p.id === post.id ? post : p
+        );
+        this.blogSubject$.next(updated);
+        this.#saveToLocalStorage();
+    };
+
+    deletePost(post : PostElementWithId) : void {
+        const id = post.id;
+        const updated = this.blogSubject$.value.filter(p => p.id !== id);
+        this.blogSubject$.next(updated);
+        this.#saveToLocalStorage();
     }
 }

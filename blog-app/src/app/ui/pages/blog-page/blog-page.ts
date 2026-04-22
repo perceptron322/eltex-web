@@ -1,26 +1,28 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+
 import { AddBlogForm } from '../../components/add-blog-form/add-blog-form';
 import { StatisticModal } from '../../components/statistic-modal/statistic-modal';
-
-import { PostElement, PostElementWithId } from '../../../../models/post.models';
-import { BlogStorageService } from '../../../services/blog-storage';
+import { BlogList } from '../../components/blog-list/blog-list';
+import { PostElementWithId } from '../../../../models/post.models';
 
 @Component({
     selector: 'app-blog-page',
-    imports: [AddBlogForm, StatisticModal],
+    imports: [BlogList, AddBlogForm, StatisticModal],
     templateUrl: './blog-page.html',
     styleUrl: './blog-page.scss',
 })
 
 export class BlogPage {
     @ViewChild(StatisticModal) statDialog!: StatisticModal;
-    @ViewChild(AddBlogForm) addBlogFormRef ?: ElementRef;
+    @ViewChild(AddBlogForm, { read: ElementRef }) addBlogFormRef ?: ElementRef;
 
-    showForm: boolean = false;
+    protected showForm: boolean = false;
+    protected formMode: OpenFormMode = 'add';
+    protected post: PostElementWithId | null = null;
+    
 
-    constructor(public blogStorage: BlogStorageService) {}
-
-    onShowFormClick() {
+    onShowAddFormClick() : void {
+        this.formMode = 'add';
         this.showForm = true;
 
         setTimeout(() => {
@@ -28,16 +30,19 @@ export class BlogPage {
         }, 0);
     }
 
-    onAdd(post: PostElement): void {
-        this.blogStorage.addPost({...post, id: crypto.randomUUID()});
-        this.showForm = false;
-    }
+    onShowEditFormClick(post : PostElementWithId) : void {
+        this.formMode = 'edit';
+        this.post = post;
+        this.showForm = true;
 
-    onDelete(post : PostElementWithId) : void {
-        this.blogStorage.deletePost(post);
+        setTimeout(() => {
+            this.addBlogFormRef?.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }, 0);
     }
 
     openStats(): void {
         this.statDialog.open();
     }
 }
+
+type OpenFormMode = 'add' | 'edit';
