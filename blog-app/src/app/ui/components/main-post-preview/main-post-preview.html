@@ -1,0 +1,32 @@
+<section class="posts container">
+    <h1 class="visually-hidden">Post list</h1>
+
+    @for(blog of blogs(); track blog.id; let i = $index) {
+        <article 
+            class="post-item" 
+            [class.item-1]="i === 0"
+            [class.item-2]="i === 1"
+        >
+            <div class="post-item-inner">
+                <div class="post-item-inner-wrapper">
+                    <h2 class="post-title">{{ blog.title }}</h2>
+                    <div class="post-description">
+                        <p>{{ blog.text }}</p>
+                    </div>
+                </div>
+            </div>
+            <img 
+                class="post-item-image"
+                src="assets/images/none-image.jpg" 
+                alt="None image."
+                loading="lazy"
+            />
+        </article>
+    }
+
+    <a
+        class="posts-browse-button"
+        routerLink="/blog">
+        Browse all posts
+    </a>
+</section>

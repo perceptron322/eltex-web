@@ -1,9 +1,11 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject, effect } from '@angular/core';
 
 import { AddBlogForm } from '../../components/add-blog-form/add-blog-form';
 import { StatisticModal } from '../../components/statistic-modal/statistic-modal';
 import { BlogList } from '../../components/blog-list/blog-list';
 import { PostElementWithId } from '../../../../models/post.models';
+import { smoothScrollIntoView } from '../../../../models/smoothScroll';
+import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
 
 @Component({
     selector: 'app-blog-page',
@@ -16,33 +18,37 @@ export class BlogPage {
     @ViewChild(StatisticModal) statDialog!: StatisticModal;
     @ViewChild(AddBlogForm, { read: ElementRef }) addBlogFormRef ?: ElementRef;
 
+    private blogStorage = inject(BlogStorageService);
+
+    constructor() {                                                                                                                              
+      effect(() => {                                                                                                                         
+        const posts = this.blogStorage.currentPageBlogs();                                                                                          
+        if (this.showForm && this.post && !posts.some(p => p.id === this.post!.id)) {
+            this.showForm = false;                                                                                                         
+            this.post = null;
+        }
+    });                                                                                                                             
+    } 
+
     protected showForm: boolean = false;
-    protected formMode: OpenFormMode = 'add';
     protected post: PostElementWithId | null = null;
     
 
-    onShowAddFormClick() : void {
-        this.formMode = 'add';
+    protected onShowAddFormClick(): void {
+        this.post = null;
         this.showForm = true;
 
-        setTimeout(() => {
-            this.addBlogFormRef?.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }, 0);
+        smoothScrollIntoView(() => this.addBlogFormRef);
     }
 
-    onShowEditFormClick(post : PostElementWithId) : void {
-        this.formMode = 'edit';
+    protected onShowEditFormClick(post : PostElementWithId): void {
         this.post = post;
         this.showForm = true;
 
-        setTimeout(() => {
-            this.addBlogFormRef?.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }, 0);
+        smoothScrollIntoView(() => this.addBlogFormRef);
     }
 
-    openStats(): void {
+    protected openStats(): void {
         this.statDialog.open();
     }
 }
-
-type OpenFormMode = 'add' | 'edit';

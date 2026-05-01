@@ -1,0 +1,154 @@
+.hobby {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 70px 264px 264px;
+  grid-template-areas: 
+    "title title description description"
+    "vertical-1 vertical-2 horizontal-1 horizontal-1"
+    "vertical-1 vertical-2 horizontal-2 horizontal-2";
+  row-gap: 25px;
+  column-gap: 26px;
+  justify-content: center;
+  padding-top: 140px;
+
+  &-title {
+    grid-area: title;
+    line-height: 1;
+  }
+
+  &-description {
+    grid-area: description;
+
+    p {
+      font-size: 21px;
+      text-align: center;
+    }
+  }
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.hobby-vertical-image-1 {
+  width: 100%;
+  height: 100%;
+
+  &-wrapper {
+    grid-area: vertical-1;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      border-radius: 8px;
+      transition: background var(--transition-duration);
+    }
+
+    &:hover::after {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    &:hover .hobby-image-text-container {
+      opacity: 1;
+    }
+  }
+}
+
+.hobby-image {
+  &-text-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 16px;
+    z-index: 2;
+    color: #FFF;
+    opacity: 0;
+    transition: opacity var(--transition-duration);
+  }
+
+  &-title {
+    display: block;
+    width: 100%;
+    font-size: 24px;
+    bottom: 110px;
+  }
+
+  &-description {
+    bottom: 10px;
+    padding-inline: 5px;
+  }
+}
+
+.hobby-vertical-image-2 {
+  grid-area: vertical-2;
+  width: 100%;
+  height: 100%;
+}
+
+.hobby-horizontal-image-1 {
+  grid-area: horizontal-1;
+  width: 100%;
+  height: 264px;
+}
+
+.hobby-horizontal-image-2 {
+  grid-area: horizontal-2;
+  width: 100%;
+  height: 264px;
+}
+
+
+
+@media (max-width: 1280px) {
+  .hobby {
+    grid-template-columns: repeat(2, 267px);
+    grid-template-rows: repeat(2, 70px) repeat(4, 264px);
+    grid-template-areas: 
+      "title title"
+      "description description"
+      "vertical-1 vertical-2"
+      "vertical-1 vertical-2"
+      "horizontal-1 horizontal-1"
+      "horizontal-2 horizontal-2";
+  }
+
+  .hobby-title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .hobby {
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hobby {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hobby-vertical-image-1-wrapper {
+    width: 268px;
+    height: 552px;
+  }
+
+  .hobby-vertical-image-2 {
+    width: 268px;
+    height: 552px;
+    align-self: flex-end;
+  }
+
+  .hobby-horizontal-image-1 {
+    display: none;
+  }
+
+  .hobby-horizontal-image-2 {
+    display: none;
+  }
+}
