@@ -1,5 +1,5 @@
 <form class="blog-new-form container" [formGroup]="blogForm" (ngSubmit)="onSubmit()">
-    <h1 class="blog-new-form-title">{{ sectionTitle }}</h1>
+    <h1 class="blog-new-form-title">{{ formTitle() }}</h1>
 
     <label class="blog-new-form-input-title-label blog-new-form-label" for="blog-new-title">Заголовок</label>
     <input 
@@ -40,7 +40,7 @@
     }
 
     <div class="blog-new-form-buttons-wrapper">
-        <button class="form-new-add-button" type="submit" [disabled]="blogForm.invalid">{{ submitText }}</button>
+        <button class="form-new-add-button" type="submit" [disabled]="blogForm.invalid">{{ saveButtonTitle() }}</button>
         <button class="form-new-cancel-button" type="button" (click)="onCancel()">Отмена</button>
     </div>
 </form>

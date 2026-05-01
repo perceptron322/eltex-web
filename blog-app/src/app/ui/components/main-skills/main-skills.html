@@ -1,0 +1,11 @@
+<section class="skills container">
+    <h1 class="skills-title">My skills</h1>
+
+    <ul class="skills-list">
+        @for(skill of skillsList; track skill) {
+            <li class="skills-list-item">
+                {{ skill }}
+            </li>
+        }
+    </ul>
+</section>
