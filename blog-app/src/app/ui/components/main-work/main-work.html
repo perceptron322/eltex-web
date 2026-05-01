@@ -1,0 +1,41 @@
+<section class="work container">
+    <div class="work-inner">
+        <h1 class="work-title">My work</h1>
+        <div class="work-description">
+            <p>
+                Duis nisi do exercitation in irure aliqua commodo 
+                nisi eu id reprehenderit dolore fugiat consectetur irure
+            </p>
+        </div>
+    </div>
+    <ul class="work-list">
+        @for(workItem of worksList; track workItem; let i = $index) {
+            <li class="work-list-item"
+                [class.item-1]="i === 0"
+                [class.item-2]="i === 1"
+                [class.item-3]="i === 2"
+            >
+                <img
+                    class="work-list-item-icon"
+                    [src]="workItem.iconUrl"
+                    alt=""
+                />
+                <div class="work-list-item-text-wrapper">
+                    <div class="work-list-item-company-name">
+                        {{ workItem.company }} - (
+                            <time [attr.datetime]="workItem.period.from">{{ workItem.period.from }}</time> - 
+                            <time [attr.datetime]="workItem.period.to">{{ workItem.period.to }}</time>)
+                    </div>
+                    <div class="work-list-item-job-title">
+                        {{ workItem.title }}
+                    </div>
+                    <div class="work-list-item-description">
+                        <p>
+                            {{ workItem.description }}
+                        </p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</section>

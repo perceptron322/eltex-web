@@ -79,7 +79,7 @@ button[disabled] {
   background-color: transparent;
   color: var(--color-green);
 
-  :hover {
+  &:hover {
     background-color: var(--color-light-green);
   }
 

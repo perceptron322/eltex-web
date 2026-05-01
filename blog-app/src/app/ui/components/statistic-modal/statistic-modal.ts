@@ -1,11 +1,9 @@
-import { Component, Input, ViewChild, ElementRef, inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-
-import { BlogStorageService } from '../../../services/blog-storage';
+import { Component, ViewChild, ElementRef, inject } from '@angular/core';
+import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
 
 @Component({
     selector: 'app-statistic-modal',
-    imports: [AsyncPipe],
+    imports: [],
     templateUrl: './statistic-modal.html',
     styleUrl: './statistic-modal.scss',
 })
@@ -14,13 +12,11 @@ export class StatisticModal {
     protected blogStorage = inject(BlogStorageService);
     @ViewChild('dialog') dialogRef!: ElementRef<HTMLDialogElement>;
 
-    protected postsCount$ = this.blogStorage.blogsCount$;
-
     open(): void {
         this.dialogRef.nativeElement.showModal();
     }
 
-    closeModal() {
+    protected closeModal() {
         this.dialogRef.nativeElement.close();
     }
 }

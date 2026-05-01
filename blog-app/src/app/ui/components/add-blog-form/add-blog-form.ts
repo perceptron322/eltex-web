@@ -1,7 +1,8 @@
-import { Component, EventEmitter, inject, Output, Input, OnInit } from '@angular/core';
+import { Component, inject, output, input, computed, effect } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { BlogStorageService } from '../../../services/blog-storage';
+import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
 import { PostElementWithId } from '../../../../models/post.models';
+import { BlogRequestService } from '../../../services/blogs/blog-request.service.ts';
 
 
 @Component({
@@ -11,15 +12,25 @@ import { PostElementWithId } from '../../../../models/post.models';
     styleUrl: './add-blog-form.scss',
 })
 
-export class AddBlogForm implements OnInit {
-    @Output() close = new EventEmitter<void>();
-    @Input() openFormMode!: OpenFormMode;
-    @Input() post: PostElementWithId | null = null;
+export class AddBlogForm {
+    public close = output();
 
+    public editData = input<PostElementWithId | null>(null);
+    protected isEditMode = computed<boolean>(() => this.editData() !== null);
+
+    protected formTitle = computed(() => {
+        return this.isEditMode() ? 'Изменить статью' : 'Добавить статью';
+    });
+
+    protected saveButtonTitle = computed(() => {
+        return this.isEditMode() ? 'Сохранить' : 'Добавить';
+    });
+
+    private blogRequest = inject(BlogRequestService);
     private blogStorage = inject(BlogStorageService);
     private fb = inject(FormBuilder);
 
-    blogForm = this.fb.group({
+    blogForm = this.fb.nonNullable.group({
         title: ['', [
             Validators.required,
             Validators.minLength(25)
@@ -30,34 +41,29 @@ export class AddBlogForm implements OnInit {
         ]]
     });
 
-    ngOnInit(): void {
-        if(this.isEdit && this.post) {
+    protected get title() { return this.blogForm.controls.title };
+    protected get text() { return this.blogForm.controls.text };
+
+    private editDataEffect = effect(() => {
+        const data = this.editData();
+
+        if(data) {
             this.blogForm.patchValue({
-                title: this.post.title,
-                text: this.post.text
+                title: data.title,
+                text: data.text
             });
+        } else {
+            this.blogForm.reset();
         }
-    }
+    });
 
-    protected get title() { return this.blogForm.controls.title; }
-    protected get text() { return this.blogForm.controls.text; }
-    private get isEdit() : boolean { return this.openFormMode === 'edit' }
-
-    protected get sectionTitle() : string {
-        return this.isEdit ? 'Изменить статью' : 'Добавить статью';
-    }
-    protected get submitText() : string {
-        return this.isEdit ? 'Сохранить' : 'Добавить';
-    }
-
-
-    onSubmit() : void {
+    onSubmit(): void {
         if(this.blogForm.invalid) {
             this.blogForm.markAllAsTouched();
             return;
         }
 
-        if(this.isEdit) {
+        if(this.isEditMode()) {
             this.onEdit();
         } else {
             this.onAdd();
@@ -65,24 +71,25 @@ export class AddBlogForm implements OnInit {
     }
 
     private onAdd(): void {
-        this.blogStorage.addPost(this.blogForm.getRawValue());
+        this.blogRequest.addPost(this.blogForm.getRawValue());
         this.blogForm.reset();
         this.close.emit();
     }
 
     private onEdit(): void {
-        if(!this.post) return;
+        const data = this.editData();
+        if(!data) return;
 
-        this.blogStorage.updatePost({
-            ...this.post,
+        this.blogRequest.updatePost({
+            ...data,
             ...this.blogForm.getRawValue()
         });
+        this.blogForm.reset();
         this.close.emit();
     }
 
-    onCancel() : void {
+    protected onCancel(): void {
+        this.blogForm.reset();
         this.close.emit();
     }
 }
-
-type OpenFormMode = 'add' | 'edit';
