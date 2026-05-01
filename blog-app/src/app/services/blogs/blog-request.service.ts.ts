@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
-import { PostElement, PostElementWithId } from '../../models/post.models';
-import { BehaviorSubject, map } from 'rxjs';
+import { BlogRequest } from './blog-request.interface';
+import { PostElement, PostElementWithId } from '../../../models/post.models';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
-
-export class BlogStorageService {
+export class BlogRequestService implements BlogRequest {
     private blogSubject$ = new BehaviorSubject<PostElementWithId[]>(
-        this.#loadFromLocalStorage()
+        this.loadFromLocalStorage()
     );
     readonly blogs$ = this.blogSubject$.asObservable();
-    readonly blogsCount$ = this.blogs$.pipe(
-        map(blogs => blogs.length)
-    );
 
 
-    #loadFromLocalStorage() : PostElementWithId[] {
+    private loadFromLocalStorage() : PostElementWithId[] {
         const raw = localStorage.getItem('blogs');
         if(!raw) return [];
 
@@ -29,7 +26,7 @@ export class BlogStorageService {
         }
     }
 
-    #saveToLocalStorage() : void {
+    private saveToLocalStorage() : void {
         try {
             const posts = this.blogSubject$.value;
             localStorage.setItem('blogs', JSON.stringify(posts));
@@ -42,7 +39,7 @@ export class BlogStorageService {
         const withId: PostElementWithId = { ...post, id: crypto.randomUUID() };
         const updated = [...this.blogSubject$.value, withId];
         this.blogSubject$.next(updated);
-        this.#saveToLocalStorage();
+        this.saveToLocalStorage();
     }
 
     updatePost(post: PostElementWithId) : void {
@@ -50,13 +47,13 @@ export class BlogStorageService {
             p => p.id === post.id ? post : p
         );
         this.blogSubject$.next(updated);
-        this.#saveToLocalStorage();
+        this.saveToLocalStorage();
     };
 
     deletePost(post : PostElementWithId) : void {
         const id = post.id;
         const updated = this.blogSubject$.value.filter(p => p.id !== id);
         this.blogSubject$.next(updated);
-        this.#saveToLocalStorage();
+        this.saveToLocalStorage();
     }
 }

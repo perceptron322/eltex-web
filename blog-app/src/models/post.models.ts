@@ -1,6 +1,6 @@
 export interface PostElement {
-    title: string | null;
-    text: string | null;
+    title: string;
+    text: string;
 }
 
 export interface PostElementWithId extends PostElement {
