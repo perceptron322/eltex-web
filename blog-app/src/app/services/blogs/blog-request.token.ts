@@ -1,4 +1,4 @@
-import { inject, InjectionToken } from "@angular/core";
-import { BlogRequest } from "./blog-request.interface";
+import { InjectionToken } from "@angular/core";
+import { IBlogRequest } from "./blog-request.interface";
 
-export const BLOG_REQUEST = new InjectionToken<BlogRequest>('BlogRequest');
+export const BLOG_REQUEST = new InjectionToken<IBlogRequest>('BlogRequest');

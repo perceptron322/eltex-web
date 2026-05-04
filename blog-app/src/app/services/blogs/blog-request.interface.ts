@@ -1,9 +1,8 @@
 import { Observable } from "rxjs";
 import { PostElement, PostElementWithId } from "../../../models/post.models";
 
-export interface BlogRequest {
-    blogs$: Observable<PostElementWithId[]>;
-
+export interface IBlogRequest {
+    getEntity(): Observable<PostElementWithId[]>;
     addPost(post: PostElement): void;
     updatePost(post: PostElementWithId): void;
     deletePost(post: PostElementWithId): void;

@@ -3,7 +3,7 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { BLOG_REQUEST } from './services/blogs/blog-request.token';
-import { BlogRequestService } from './services/blogs/blog-request.service.ts';
+import { BlogRequestService } from './services/blogs/blog-request.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

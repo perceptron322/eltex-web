@@ -1,8 +1,7 @@
-import { Component, computed, inject } from '@angular/core';
-import { input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { PostElementWithId } from '../../../../models/post.models';
 import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
-import { BlogRequestService } from '../../../services/blogs/blog-request.service.ts';
+import { BLOG_REQUEST } from '../../../services/blogs/blog-request.token';
 
 @Component({
     selector: 'li[app-blog-card]',
@@ -11,7 +10,7 @@ import { BlogRequestService } from '../../../services/blogs/blog-request.service
     styleUrl: './blog-card.scss',
 })
 export class BlogCard {
-    private blogRequest = inject(BlogRequestService);
+    private blogRequest = inject(BLOG_REQUEST);
     private blogStorage = inject(BlogStorageService);
     card = input.required<PostElementWithId>();
     openEdit = output<PostElementWithId>();

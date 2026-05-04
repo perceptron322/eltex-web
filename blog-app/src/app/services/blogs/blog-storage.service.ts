@@ -1,21 +1,20 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { BlogRequestService } from './blog-request.service.ts';
+import { computed, Injectable, signal } from '@angular/core';
 import { PostElementWithId } from '../../../models/post.models';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root',
 })
-
 export class BlogStorageService {
-    private blogRequest = inject(BlogRequestService);
-    private blogs = toSignal(this.blogRequest.blogs$, { initialValue: [] })
+    public entity = signal<PostElementWithId[] | null>(null);
     private readonly pageSize = 7;
 
-    public blogsCount = computed(() => this.blogs().length);
+    public setEntity(entity: PostElementWithId[]): void {
+        this.entity.set(entity);
+    }
 
+    public blogsCount = computed(() => this.entity()?.length ?? 0);
     public totalPages = computed(() =>
-        Math.ceil(this.blogs().length / this.pageSize)
+        Math.ceil(this.blogsCount() / this.pageSize)
     );
     readonly pages = computed(() =>                                                                                                                
         Array.from({ length: this.totalPages() }, (_, i) => i + 1)                                                                               
@@ -28,7 +27,9 @@ export class BlogStorageService {
     }
 
     private firstBlogOnPageNumber = computed(() => (this.currentPage() - 1) * this.pageSize);
-    public currentPageBlogs = computed<PostElementWithId[]>(() => 
-        this.blogs().slice(this.firstBlogOnPageNumber(), this.firstBlogOnPageNumber() + this.pageSize)
-    );
+    public currentPageBlogs = computed<PostElementWithId[]>(() => {
+        const entity = this.entity() ?? [];
+        const start = this.firstBlogOnPageNumber();
+        return entity.slice(start, start + this.pageSize);
+    });
 }

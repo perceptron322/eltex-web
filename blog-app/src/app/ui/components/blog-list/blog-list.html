@@ -6,7 +6,7 @@
     </p>
     
     <ul class="blogs-card-list">
-        @for(blog of blogStorage.currentPageBlogs(); track blog.id) {
+        @for(blog of currentPageBlogs(); track blog.id) {
             <li 
                 app-blog-card 
                 [card]="blog"
@@ -17,29 +17,29 @@
         }
     </ul>
 
-    @if(blogStorage.blogsCount(); as count) {
+    @if(blogsCount(); as count) {
         @if(count > 7) {
             <div class="blogs-pagination">
-                @for(page of blogStorage.pages(); track page) {
+                @for(page of pages(); track page) {
                     <span 
                         class="pagination-item"
-                        [class.is-active]="page === blogStorage.currentPage()"
-                        (click)="blogStorage.setCurrentPage(page)">
+                        [class.is-active]="page === currentPage()"
+                        (click)="setCurrentPage(page)">
                     </span>
                 }
             </div>
 
-            @if(blogStorage.currentPage() === 1) {
+            @if(currentPage() === 1) {
                 <button 
                     class="blogs-button" 
-                    (click)="blogStorage.setCurrentPage(blogStorage.currentPage() + 1)"
+                    (click)="setCurrentPage(currentPage() + 1)"
                 >
                     Next
                 </button>
-            } @else if (blogStorage.currentPage() === blogStorage.totalPages()) {
+            } @else if (currentPage() === totalPages()) {
                 <button 
                     class="navigation-button-previous"
-                    (click)="blogStorage.setCurrentPage(blogStorage.currentPage() - 1)"
+                    (click)="setCurrentPage(currentPage() - 1)"
                 >
                     Back
                 </button>
@@ -47,13 +47,13 @@
                 <div class="navigation-buttons-wrapper">
                     <button 
                         class="navigation-button-left"
-                        (click)="blogStorage.setCurrentPage(blogStorage.currentPage() - 1)"
+                        (click)="setCurrentPage(currentPage() - 1)"
                     >
                     </button>
 
                     <button 
                         class="navigation-button-right"
-                        (click)="blogStorage.setCurrentPage(blogStorage.currentPage() + 1)"
+                        (click)="setCurrentPage(currentPage() + 1)"
                     >
                     </button>
                 </div>

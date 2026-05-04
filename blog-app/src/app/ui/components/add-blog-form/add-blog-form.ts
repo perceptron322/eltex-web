@@ -1,8 +1,7 @@
 import { Component, inject, output, input, computed, effect } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
 import { PostElementWithId } from '../../../../models/post.models';
-import { BlogRequestService } from '../../../services/blogs/blog-request.service.ts';
+import { BLOG_REQUEST } from '../../../services/blogs/blog-request.token';
 
 
 @Component({
@@ -11,12 +10,13 @@ import { BlogRequestService } from '../../../services/blogs/blog-request.service
     templateUrl: './add-blog-form.html',
     styleUrl: './add-blog-form.scss',
 })
-
 export class AddBlogForm {
     public close = output();
-
     public editData = input<PostElementWithId | null>(null);
     protected isEditMode = computed<boolean>(() => this.editData() !== null);
+
+    private blogRequest = inject(BLOG_REQUEST);
+    private fb = inject(FormBuilder);
 
     protected formTitle = computed(() => {
         return this.isEditMode() ? 'Изменить статью' : 'Добавить статью';
@@ -25,10 +25,6 @@ export class AddBlogForm {
     protected saveButtonTitle = computed(() => {
         return this.isEditMode() ? 'Сохранить' : 'Добавить';
     });
-
-    private blogRequest = inject(BlogRequestService);
-    private blogStorage = inject(BlogStorageService);
-    private fb = inject(FormBuilder);
 
     blogForm = this.fb.nonNullable.group({
         title: ['', [
