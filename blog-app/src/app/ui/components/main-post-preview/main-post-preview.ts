@@ -1,5 +1,4 @@
-import { Component, inject, input } from '@angular/core';
-import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
+import { Component, input } from '@angular/core';
 import { PostElementWithId } from '../../../../models/post.models';
 import { RouterLink } from '@angular/router';
 
@@ -11,6 +10,4 @@ import { RouterLink } from '@angular/router';
 })
 export class MainPostPreview {
     public blogs = input<PostElementWithId[]>();
-
-    protected blogStorage = inject(BlogStorageService);
 }

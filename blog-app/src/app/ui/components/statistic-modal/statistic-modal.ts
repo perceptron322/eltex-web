@@ -7,10 +7,11 @@ import { BlogStorageService } from '../../../services/blogs/blog-storage.service
     templateUrl: './statistic-modal.html',
     styleUrl: './statistic-modal.scss',
 })
-
 export class StatisticModal {
-    protected blogStorage = inject(BlogStorageService);
+    private blogStorage = inject(BlogStorageService);
     @ViewChild('dialog') dialogRef!: ElementRef<HTMLDialogElement>;
+
+    protected blogsCount = this.blogStorage.blogsCount;
 
     open(): void {
         this.dialogRef.nativeElement.showModal();

@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BlogRequest } from './blog-request.interface';
+import { inject } from '@angular/core';
+import { IBlogRequest } from './blog-request.interface';
 import { PostElement, PostElementWithId } from '../../../models/post.models';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, tap, of } from 'rxjs';
+import { BlogStorageService } from './blog-storage.service';
 
-@Injectable({
-    providedIn: 'root',
-})
-export class BlogRequestService implements BlogRequest {
-    private blogSubject$ = new BehaviorSubject<PostElementWithId[]>(
-        this.loadFromLocalStorage()
-    );
-    readonly blogs$ = this.blogSubject$.asObservable();
+export class BlogRequestService implements IBlogRequest {
+    private blogStorage = inject(BlogStorageService);
 
+    public getEntity(): Observable<PostElementWithId[]> {
+        return of(this.loadFromLocalStorage()).pipe(
+            tap((result) => this.blogStorage.setEntity(result))
+        );
+    }
 
     private loadFromLocalStorage() : PostElementWithId[] {
         const raw = localStorage.getItem('blogs');
@@ -28,7 +28,7 @@ export class BlogRequestService implements BlogRequest {
 
     private saveToLocalStorage() : void {
         try {
-            const posts = this.blogSubject$.value;
+            const posts = this.blogStorage.entity();
             localStorage.setItem('blogs', JSON.stringify(posts));
         } catch(err) {
             console.error('Не удалось загрузить данные в localStorage, ', err);
@@ -37,23 +37,23 @@ export class BlogRequestService implements BlogRequest {
 
     addPost(post: PostElement) : void {
         const withId: PostElementWithId = { ...post, id: crypto.randomUUID() };
-        const updated = [...this.blogSubject$.value, withId];
-        this.blogSubject$.next(updated);
+        const updated = [...(this.blogStorage.entity() ?? []), withId];
+        this.blogStorage.setEntity(updated);
         this.saveToLocalStorage();
     }
 
     updatePost(post: PostElementWithId) : void {
-        const updated = this.blogSubject$.value.map(
+        const updated = (this.blogStorage.entity() ?? []).map(
             p => p.id === post.id ? post : p
         );
-        this.blogSubject$.next(updated);
+        this.blogStorage.setEntity(updated);
         this.saveToLocalStorage();
     };
 
     deletePost(post : PostElementWithId) : void {
         const id = post.id;
-        const updated = this.blogSubject$.value.filter(p => p.id !== id);
-        this.blogSubject$.next(updated);
+        const updated = (this.blogStorage.entity() ?? []).filter(p => p.id !== id);
+        this.blogStorage.setEntity(updated);
         this.saveToLocalStorage();
     }
 }
