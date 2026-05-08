@@ -1,9 +1,8 @@
 import { Component, ViewChild, ElementRef, inject, effect } from '@angular/core';
-
 import { AddBlogForm } from '../../components/add-blog-form/add-blog-form';
 import { StatisticModal } from '../../components/statistic-modal/statistic-modal';
 import { BlogList } from '../../components/blog-list/blog-list';
-import { PostElementWithId } from '../../../../models/post.models';
+import { PostElementWithId } from '../../interfaces/post.models';
 import { smoothScrollIntoView } from '../../../../models/smoothScroll';
 import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
 

@@ -1,3 +1,5 @@
+import { IComment } from "./Comment.interface";
+
 export interface PostElement {
     title: string;
     text: string;
@@ -5,4 +7,6 @@ export interface PostElement {
 
 export interface PostElementWithId extends PostElement {
     id: ReturnType<typeof crypto.randomUUID>;
+    commentsList: IComment[];
+    rating: number;
 }

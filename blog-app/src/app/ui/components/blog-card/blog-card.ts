@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, output } from '@angular/core';
-import { PostElementWithId } from '../../../../models/post.models';
+import { PostElementWithId } from '../../interfaces/post.models';
 import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
 import { BLOG_REQUEST } from '../../../services/blogs/blog-request.token';
 

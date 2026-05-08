@@ -1,6 +1,6 @@
 import { Component, inject, output, input, computed, effect } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { PostElementWithId } from '../../../../models/post.models';
+import { PostElementWithId } from '../../interfaces/post.models';
 import { BLOG_REQUEST } from '../../../services/blogs/blog-request.token';
 
 

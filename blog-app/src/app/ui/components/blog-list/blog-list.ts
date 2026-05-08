@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, output, inject, OnInit, DestroyRef} from '@angular/core';
-import { PostElementWithId } from '../../../../models/post.models';
+import { PostElementWithId } from '../../interfaces/post.models';
 import { BlogCard } from '../blog-card/blog-card';
 import { BLOG_REQUEST } from '../../../services/blogs/blog-request.token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-blog-list',
@@ -16,6 +17,8 @@ export class BlogList implements OnInit {
     private blogStorage = inject(BlogStorageService);
     private blogRequest = inject(BLOG_REQUEST);
     private destroyRef = inject(DestroyRef);
+
+    constructor(private router: Router) {}
 
     protected currentPage = this.blogStorage.currentPage;
     protected currentPageBlogs = this.blogStorage.currentPageBlogs;
@@ -37,5 +40,10 @@ export class BlogList implements OnInit {
 
     protected setCurrentPage(page: number) {
         this.blogStorage.setCurrentPage(page);
+    }
+
+    protected onSeparateBlogOpen(id: string): void {
+        console.log('click');
+        this.router.navigate(['blog', id]);
     }
 }

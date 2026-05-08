@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { PostElement, PostElementWithId } from "../../../models/post.models";
+import { PostElement, PostElementWithId } from "../../ui/interfaces/post.models";
 
 export interface IBlogRequest {
     getEntity(): Observable<PostElementWithId[]>;

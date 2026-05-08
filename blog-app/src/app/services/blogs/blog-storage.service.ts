@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { PostElementWithId } from '../../../models/post.models';
+import { PostElementWithId } from '../../ui/interfaces/post.models';
 
 @Injectable({
     providedIn: 'root',
