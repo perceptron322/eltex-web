@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { IBlogRequest } from './blog-request.interface';
-import { PostElement, PostElementWithId } from '../../../models/post.models';
+import { PostElement, PostElementWithId } from '../../ui/interfaces/post.models';
 import { Observable, tap, of } from 'rxjs';
 import { BlogStorageService } from './blog-storage.service';
 
@@ -36,7 +36,7 @@ export class BlogRequestService implements IBlogRequest {
     }
 
     addPost(post: PostElement) : void {
-        const withId: PostElementWithId = { ...post, id: crypto.randomUUID() };
+        const withId: PostElementWithId = { ...post, id: crypto.randomUUID(), commentsList: [], rating: 0 };
         const updated = [...(this.blogStorage.entity() ?? []), withId];
         this.blogStorage.setEntity(updated);
         this.saveToLocalStorage();

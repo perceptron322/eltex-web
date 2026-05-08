@@ -11,6 +11,7 @@
                 app-blog-card 
                 [card]="blog"
                 (openEdit)="onOpenEdit($event)"
+                (click)="onSeparateBlogOpen(blog.id)"
             ></li>
         } @empty {
             <div class="blogs-card-list__empty">Нет статей</div>

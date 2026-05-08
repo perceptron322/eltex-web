@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { PostElementWithId } from '../../../../models/post.models';
+import { PostElementWithId } from '../../interfaces/post.models';
 import { RouterLink } from '@angular/router';
 
 @Component({

@@ -1,0 +1,52 @@
+.article {
+    &-wrapper {
+        position: relative;
+        display: flex;
+        background-color: #FAFAFA;
+        border-radius: 10px;
+    }
+
+    &-image {
+        width: 100%;
+        max-width: 80%;
+        aspect-ratio: 368 / 200;
+    }
+
+    &-inner {
+        padding: 16px 24px;
+    }
+
+    &-title {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    &-description {
+        margin-bottom: 15px;
+    }
+}
+
+.article-rating {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    display: flex;
+    column-gap: 5px;
+    justify-content: space-between;
+    border: var(--color-dark-gray) 1px solid;
+    border-radius: 5px;
+    align-items: center;
+
+    &-value {
+        font-size: 20px;
+        cursor: default;
+    }
+
+    &-button {
+        padding: 0;
+        width: 25px;
+        aspect-ratio: 1;
+        border: none;
+        background-color: transparent;
+    }
+}

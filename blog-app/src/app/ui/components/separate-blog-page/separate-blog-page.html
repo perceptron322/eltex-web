@@ -1,0 +1,37 @@
+<section class="separate-blog-page container">
+    
+    @if(blog(); as post) {
+        <div class="article-wrapper">
+            <img 
+                class="article-image"
+                src="assets/images/hobby_section/small-non-image.jpg" 
+                alt=""
+            />
+            <div class="article-inner">
+                <p class="article-title">
+                    {{ post.title }}
+                </p>
+                <p class="article-description">
+                    {{ post.text }}
+                </p>
+                <time class="article-datetime" datetime="2025-10-16">Oct 16, 2025</time>
+            </div>
+            <div class="article-rating">
+                <button mat-icon-button class="article-rating-button" (click)="onChangeRating('decrement')">
+                    <mat-icon>remove</mat-icon>
+                </button>
+                <div class="article-rating-value"> {{ post.rating }} </div>
+                <button mat-icon-button class="article-rating-button" (click)="onChangeRating('increment')">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <app-blog-comments 
+            [comments]="post.commentsList"
+        />
+        <app-add-blog-comment 
+            [blog]="post"
+        />
+    }
+</section>

@@ -1,0 +1,1 @@
+export type ChangeOperation = 'increment' | 'decrement';

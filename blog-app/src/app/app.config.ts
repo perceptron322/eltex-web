@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { BLOG_REQUEST } from './services/blogs/blog-request.token';
@@ -13,7 +13,8 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'top'
-      })
+      }),
+      withComponentInputBinding()
     ),
     { provide: BLOG_REQUEST, useClass: BlogRequestService }
   ]

@@ -1,0 +1,24 @@
+.add-comment-card {
+    max-width: 1000px;
+    margin-inline: auto;
+    margin-top: 30px;                                                                                                                     
+}
+                                                                                                                                                
+.add-comment-content {                                                                                                                       
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 16px;                                                                                                                           
+}
+                                                                                                                                                
+.full-width {                                                                                                                                
+    width: 100%;
+}
+
+.add-comment-actions {
+    gap: 8px;
+}                                                                                                                                              
+
+mat-card-actions button mat-icon {                                                                                                             
+    margin-right: 4px;                                                                                                                         
+}
