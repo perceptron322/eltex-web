@@ -1,18 +1,22 @@
 <section class="separate-blog-page container">
     
-    @if(blog(); as post) {
+    @if(loading()) {
+        <div class="loader">                                                                                                                         
+            <div class="loader__spinner"></div>                                                                                                        
+        </div> 
+    } @else if(blog(); as post) {
         <div class="article-wrapper">
             <img 
                 class="article-image"
-                src="assets/images/hobby_section/small-non-image.jpg" 
-                alt=""
+                [src]="imgSrc()"
+                alt="blog image"
             />
             <div class="article-inner">
                 <p class="article-title">
                     {{ post.title }}
                 </p>
                 <p class="article-description">
-                    {{ post.text }}
+                    {{ post.content }}
                 </p>
                 <time class="article-datetime" datetime="2025-10-16">Oct 16, 2025</time>
             </div>
@@ -28,10 +32,12 @@
         </div>
 
         <app-blog-comments 
-            [comments]="post.commentsList"
+            [comments]="comments()"
         />
         <app-add-blog-comment 
             [blog]="post"
         />
+    } @else {
+        <p>Статья не найдена</p>
     }
 </section>

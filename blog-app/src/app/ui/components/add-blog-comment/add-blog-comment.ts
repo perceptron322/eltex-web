@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, ɵInternalFormsSharedModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IComment } from '../../interfaces/Comment.interface';
-import { BlogCommentRequest } from '../../../services/separate-blog/blog-comment-request.service';
+import { SeparateBlogRequest } from '../../../services/separate-blog/separate-blog-request.service';
 import { PostElementWithId } from '../../interfaces/post.models';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';                                                                             
@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';                                                                                    
 import { MatIconModule } from '@angular/material/icon';                                                                                      
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-add-blog-comment',
@@ -26,11 +27,11 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 export class AddBlogComment {
     blog = input<PostElementWithId | null>(null);
 
-    private req = inject(BlogCommentRequest);
+    private req = inject(SeparateBlogRequest);
 
     protected commentForm = new FormGroup({
-        author: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-        text: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+        username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+        content: new FormControl('', { nonNullable: true, validators: [Validators.required] })
     });
 
     protected onSubmit(): void {
@@ -40,12 +41,15 @@ export class AddBlogComment {
         }
 
         const post = this.blog();
-        console.log(post);
         if(!post) return;
 
-        const { author, text } = this.commentForm.getRawValue();
-        const comment: IComment = { author, text, datetime: '01-01-2026', rating: 0, id: crypto.randomUUID() };
-        this.req.addComment(post, comment);
+        const { username, content } = this.commentForm.getRawValue();
+        const comment: IComment = { username: username, content: content, rating: 0 };
+        if(environment.isDev) {
+            this.req.addComment(post, comment);
+        } else {
+            this.req.addComment(post, { ...comment, id: crypto.randomUUID() });
+        }
         this.commentForm.reset();
     }
 

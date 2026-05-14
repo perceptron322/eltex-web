@@ -18,20 +18,25 @@ export class BlogList implements OnInit {
     private blogRequest = inject(BLOG_REQUEST);
     private destroyRef = inject(DestroyRef);
 
-    constructor(private router: Router) {}
-
     protected currentPage = this.blogStorage.currentPage;
-    protected currentPageBlogs = this.blogStorage.currentPageBlogs;
-    protected blogsCount = this.blogStorage.blogsCount;
+    protected pageBlogs = this.blogStorage.blogs;
+    protected blogsCount = this.blogStorage.totalBlogsCount;
     protected pages = this.blogStorage.pages;
     protected totalPages = this.blogStorage.totalPages;
+    protected loading = this.blogStorage.loading;
 
     openEdit = output<PostElementWithId>();
 
+    constructor(private router: Router) {}
+
     ngOnInit(): void {
-        this.blogRequest.getEntity()
+        this.blogStorage.loading.set(true);
+        this.blogRequest.getBlogs(this.blogStorage.currentPage(), this.blogStorage.pageSize)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe();
+        .subscribe({
+            error: () => this.blogStorage.loading.set(false),
+            complete: () => this.blogStorage.loading.set(false)
+        });
     }
 
     protected onOpenEdit(post: PostElementWithId): void {
@@ -39,11 +44,10 @@ export class BlogList implements OnInit {
     }
 
     protected setCurrentPage(page: number) {
-        this.blogStorage.setCurrentPage(page);
+        this.blogRequest.changeCurrentPage(page);
     }
 
     protected onSeparateBlogOpen(id: string): void {
-        console.log('click');
         this.router.navigate(['blog', id]);
     }
 }

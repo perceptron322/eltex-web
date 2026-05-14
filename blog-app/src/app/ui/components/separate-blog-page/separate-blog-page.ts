@@ -1,35 +1,44 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, input, untracked, computed } from '@angular/core';
 import { BlogComments } from '../blog-comments/blog-comments';
 import { AddBlogComment } from '../add-blog-comment/add-blog-comment';
-import { BlogCommentRequest } from '../../../services/separate-blog/blog-comment-request.service';
-import { BlogCommentStorage } from '../../../services/separate-blog/blog-comment-storage.service';
+import { SeparateBlogRequest } from '../../../services/separate-blog/separate-blog-request.service';
+import { SeparateBlogStorage } from '../../../services/separate-blog/separate-blog-storage.service';
 import { ChangeOperation } from '../../interfaces/changeOperation.type';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { environment } from '../../../../environments/environment';
+import { IComment } from '../../interfaces/Comment.interface';
 
 @Component({
     selector: 'app-separate-blog-page',
     imports: [BlogComments, AddBlogComment, MatButtonModule, MatIcon],
     providers: [
-        BlogCommentRequest,
-        BlogCommentStorage
+        SeparateBlogRequest,
+        SeparateBlogStorage
     ],
     templateUrl: './separate-blog-page.html',
     styleUrl: './separate-blog-page.scss',
 })
 export class SeparateBlogPage {
-    id = input.required<string>();
+    private req = inject(SeparateBlogRequest);
+    private store = inject(SeparateBlogStorage);
 
-    private req = inject(BlogCommentRequest);
-    private store = inject(BlogCommentStorage);
+    id = input.required<string>();
+    protected blog = this.store.blogData;
+    protected comments = environment.isDev ? this.store.comments : computed<IComment[]>(() => this.blog()?.commentsList ?? []);
+    protected loading = this.store.loading;
+    protected imgSrc = computed(() => this.blog()?.imgSrc ?? 'assets/images/hobby_section/small-non-image.jpg');
 
     constructor() {
-        effect(() => this.req.getBlogEntity(this.id()));
+        effect(() => {
+            const id = this.id();
+            untracked(() => {
+                this.req.getBlogData(id);
+            });
+        });
     }
 
-    protected blog = this.store.blogData;
-
     protected onChangeRating(operationType: ChangeOperation) {
-        this.req.blogChangeRating(operationType);
+        this.req.changeBlogRating(operationType);
     }
 }

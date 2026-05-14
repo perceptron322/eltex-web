@@ -5,31 +5,32 @@ import { PostElementWithId } from '../../ui/interfaces/post.models';
     providedIn: 'root',
 })
 export class BlogStorageService {
-    public entity = signal<PostElementWithId[] | null>(null);
-    private readonly pageSize = 7;
+    public blogs = signal<PostElementWithId[] | null>(null);
+    private _currentPage = signal(1);
+    public readonly currentPage = this._currentPage.asReadonly();
+    public readonly pageSize = 7;
+    public loading = signal<boolean>(false);
 
-    public setEntity(entity: PostElementWithId[]): void {
-        this.entity.set(entity);
-    }
+    private _totalBlogsCount = signal(1);
+    public readonly totalBlogsCount = this._totalBlogsCount.asReadonly();
 
-    public blogsCount = computed(() => this.entity()?.length ?? 0);
     public totalPages = computed(() =>
-        Math.ceil(this.blogsCount() / this.pageSize)
+        Math.ceil(this.totalBlogsCount() / this.pageSize)
     );
     readonly pages = computed(() =>                                                                                                                
         Array.from({ length: this.totalPages() }, (_, i) => i + 1)                                                                               
-    ); 
+    );
 
-    public currentPage = signal(1);
-    public setCurrentPage(pageNumber : number): void {
-        if(pageNumber < 1 || pageNumber > this.totalPages()) return;
-        this.currentPage.set(pageNumber);
+    public setBlogs(blogs: PostElementWithId[]): void {
+        this.blogs.set(blogs);
     }
 
-    private firstBlogOnPageNumber = computed(() => (this.currentPage() - 1) * this.pageSize);
-    public currentPageBlogs = computed<PostElementWithId[]>(() => {
-        const entity = this.entity() ?? [];
-        const start = this.firstBlogOnPageNumber();
-        return entity.slice(start, start + this.pageSize);
-    });
+    public setTotal(count: number): void {
+        this._totalBlogsCount.set(count);
+    }
+
+    public setCurrentPage(pageNumber : number): void {
+        if(pageNumber < 1 || pageNumber > this.totalPages()) return;
+        this._currentPage.set(pageNumber);
+    }
 }
