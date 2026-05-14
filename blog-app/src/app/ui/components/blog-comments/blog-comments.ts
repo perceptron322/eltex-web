@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { IComment } from '../../interfaces/Comment.interface';
 import { ChangeOperation } from '../../interfaces/changeOperation.type';
-import { BlogCommentRequest } from '../../../services/separate-blog/blog-comment-request.service';
+import { SeparateBlogRequest } from '../../../services/separate-blog/separate-blog-request.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -13,11 +13,16 @@ import { MatIcon } from '@angular/material/icon';
     styleUrl: './blog-comments.scss',
 })
 export class BlogComments {
-    comments = input.required<IComment[]>();
+    private req = inject(SeparateBlogRequest);
 
-    private req = inject(BlogCommentRequest);
+    comments = input.required<IComment[] | null>();
     
-    onChangeRating(operationType: ChangeOperation, commentId: string) {
-        this.req.commentChangeRating(operationType, commentId);
+    onChangeRating(operationType: ChangeOperation, commentId: string, currentRating: number) {
+        const rating = operationType === 'increment' 
+            ? currentRating + 1
+            : currentRating - 1;
+        if(rating > 5 || rating < 0) return;
+
+        this.req.changeCommentRating(commentId, rating);
     }
 }

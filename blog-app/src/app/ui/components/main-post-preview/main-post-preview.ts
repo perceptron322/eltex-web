@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { PostElementWithId } from '../../interfaces/post.models';
 import { RouterLink } from '@angular/router';
 

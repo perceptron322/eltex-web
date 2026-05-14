@@ -11,7 +11,7 @@ export class StatisticModal {
     private blogStorage = inject(BlogStorageService);
     @ViewChild('dialog') dialogRef!: ElementRef<HTMLDialogElement>;
 
-    protected blogsCount = this.blogStorage.blogsCount;
+    protected blogsCount = this.blogStorage.totalBlogsCount;
 
     open(): void {
         this.dialogRef.nativeElement.showModal();

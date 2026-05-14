@@ -26,18 +26,46 @@
         id="blog-new-textarea"
         placeholder="Текст статьи"
         rows="5"
-        formControlName="text"
+        formControlName="content"
     ></textarea>
 
-    @if(text.touched && text.invalid) {
-        @if(text.errors?.['required']) {
+    @if(content.touched && content.invalid) {
+        @if(content.errors?.['required']) {
             <p class="input-error">- обязательное поле</p>
-        } @else if (text.errors?.['minlength']; as err) {
+        } @else if (content.errors?.['minlength']; as err) {
             <p class="input-error">
                 - минимум {{ err.requiredLength }} символов (сейчас {{ err.actualLength }})
             </p>
         }
     }
+
+    <input
+        class="blog-new-form-image-input"
+        type="file"
+        accept="image"
+        (change)="onFileSelected($event)"
+        #fileInput
+        hidden
+    >
+    <div class="image-input-wrapper">
+        <div class="image-input-buttons-wrapper">
+            <button class="image-button--select" type="button" (click)="fileInput.click()">
+                Выбрать изображение
+            </button>
+            @if(previewUrl) {                                                                                                                             
+                <button class="image-button--remove" type="button" (click)="clearImage(fileInput)">Удалить</button>
+            }
+        </div>
+        
+        @if(previewUrl) {
+            <img 
+                class="image-preview" 
+                [src]="previewUrl" 
+                alt="preview"
+            />
+        }
+    </div>
+    
 
     <div class="blog-new-form-buttons-wrapper">
         <button class="form-new-add-button" type="submit" [disabled]="blogForm.invalid">{{ saveButtonTitle() }}</button>

@@ -5,10 +5,11 @@ import { BlogList } from '../../components/blog-list/blog-list';
 import { PostElementWithId } from '../../interfaces/post.models';
 import { smoothScrollIntoView } from '../../../../models/smoothScroll';
 import { BlogStorageService } from '../../../services/blogs/blog-storage.service';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
     selector: 'app-blog-page',
-    imports: [BlogList, AddBlogForm, StatisticModal],
+    imports: [BlogList, AddBlogForm, StatisticModal, MatIcon],
     templateUrl: './blog-page.html',
     styleUrl: './blog-page.scss',
 })
@@ -21,7 +22,8 @@ export class BlogPage {
 
     constructor() {                                                                                                                              
       effect(() => {                                                                                                                         
-        const posts = this.blogStorage.currentPageBlogs();                                                                                          
+        const posts = this.blogStorage.blogs();                                  
+        if(!posts) return;                                                        
         if (this.showForm && this.post && !posts.some(p => p.id === this.post!.id)) {
             this.showForm = false;                                                                                                         
             this.post = null;

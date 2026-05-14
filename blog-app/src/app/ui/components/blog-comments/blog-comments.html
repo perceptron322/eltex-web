@@ -3,16 +3,16 @@
     @for(comment of comments(); track comment.id) {
         <mat-card class="comments-item">
             <div class="comments-inner">
-                <p class="comments-item-author"> {{ comment.author }} </p>
-                <p class="comments-item-text"> {{ comment.text }} </p>
+                <p class="comments-item-author"> {{ comment.username }} </p>
+                <p class="comments-item-text"> {{ comment.content }} </p>
             </div>
             <time class="comments-item-datetime" datetime="2025-10-16"> {{ comment.datetime }} </time>
             <div class="comments-item-rating">
-                <button mat-icon-button class="comments-rating-button" (click)="onChangeRating('decrement', comment.id)">
+                <button mat-icon-button class="comments-rating-button" (click)="onChangeRating('decrement', comment.id ?? '', comment.rating)">
                     <mat-icon>remove</mat-icon>   
                 </button>
                 <div class="comments-rating-value"> {{ comment.rating }} </div>
-                <button mat-icon-button class="comments-rating-button" (click)="onChangeRating('increment', comment.id)">
+                <button mat-icon-button class="comments-rating-button" (click)="onChangeRating('increment', comment.id ?? '', comment.rating)">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

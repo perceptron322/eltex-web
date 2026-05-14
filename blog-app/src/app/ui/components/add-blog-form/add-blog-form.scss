@@ -95,24 +95,41 @@ button[disabled] {
   color: #FF0000;
 }
 
-// .loading-icon-wrapper {
-//   display: none;
-//   position: absolute;
-//   top: 50%;
-//   left: 45%;
-//   transform: translate(-50% -50%);
+.image-input-wrapper {
+  display: flex;
+  column-gap: 50px;
+  margin-top: 20px;
+}
 
-//   &.show {
-//     display: block;
-//     animation: spin 2s linear infinite;
-//   }
-// }
+.image-input-buttons-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
 
-// @keyframes spin {
-//     from {
-//         transform: rotate(0deg);
-//     }
-//     to {
-//         transform: rotate(360deg);
-//     }
-// }
+@mixin imageInputButtons {
+  background-color: transparent;
+  border: 1px var(--color-green) solid;
+  width: 160px;
+
+  &:hover {
+    background-color: var(--color-light-green)
+  }
+}
+
+.image-button {
+  &--select {
+    @include formButtonsView();
+    @include imageInputButtons();
+  }
+
+  &--remove {
+    @include formButtonsView();
+    @include imageInputButtons();
+  }
+}
+
+.image-preview {
+  max-width: 300px;
+  max-height: 500px;
+}

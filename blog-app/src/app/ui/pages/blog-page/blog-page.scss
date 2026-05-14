@@ -27,13 +27,15 @@
     border: none;
     background-color: transparent;
     color: var(--color-green);
-
-    &:hover .button-svg {
-      transform: scale(1.2)
-    }
   }
 }
 
-.button-svg {
+.admin-panel-icon {
+  width: 20px;
+  aspect-ratio: 1;
   transition-duration: var(--transition-duration);
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
